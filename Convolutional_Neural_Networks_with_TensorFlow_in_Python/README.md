@@ -9,8 +9,8 @@ apt-get install libgl1-mesa-glx libegl1-mesa libxrandr2 libxrandr2 libxss1 libxc
 
 download the anaconda package from https://www.anaconda.com/download/#linux
 
-bash ~/Downloads/Anaconda3-2020.02-Linux-x86_64.sh 
-WITH THE NAME OF THE PACKAGE YOU DOWNLOADED
+bash ~/Downloads/Anaconda3-2020.02-Linux-x86_64.sh \
+WITH THE NAME OF THE PACKAGE YOU DOWNLOADED\
 You may have to install with the -u option to update the existing package.
 
 
@@ -31,11 +31,11 @@ To test it, open a new dos shell, and you should be able to use conda commands n
 
 ### Visual Studio Code Setup
 https://code.visualstudio.com/docs/languages/python
-https://medium.com/@udiyosovzon/how-to-activate-conda-environment-in-vs-code-ce599497f20d
-from an Administrator Powershell prompt change the Powershell Execution Policy to remote signed i.e. Set-ExecutionPolicy RemoteSigned
+https://medium.com/@udiyosovzon/how-to-activate-conda-environment-in-vs-code-ce599497f20d\
+from an Administrator Powershell prompt change the Powershell Execution Policy to remote signed i.e. Set-ExecutionPolicy RemoteSigned\
 open an Anaconda Prompt and run conda init powershell which will add Conda related startup to a Powershell profile.ps1 somewhere in your user's profile.
 
 
 ### Install Tensorflow
-pip install tensorflow --user
+pip install tensorflow --user\
 pip install tensorflow-datasets --user
