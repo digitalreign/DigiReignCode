@@ -31,7 +31,7 @@ To test it, open a new dos shell, and you should be able to use conda commands n
 
 ### Visual Studio Code Setup
 https://code.visualstudio.com/docs/languages/python
-https://medium.com/@udiyosovzon/how-to-activate-conda-environment-in-vs-code-ce599497f20d\
+https://medium.com/@udiyosovzon/how-to-activate-conda-environment-in-vs-code-ce599497f20d \
 from an Administrator Powershell prompt change the Powershell Execution Policy to remote signed i.e. Set-ExecutionPolicy RemoteSigned\
 open an Anaconda Prompt and run conda init powershell which will add Conda related startup to a Powershell profile.ps1 somewhere in your user's profile.
 
