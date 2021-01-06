@@ -10,14 +10,14 @@ apt-get install libgl1-mesa-glx libegl1-mesa libxrandr2 libxrandr2 libxss1 libxc
 download the anaconda package from https://www.anaconda.com/download/#linux
 
 bash ~/Downloads/Anaconda3-2020.02-Linux-x86_64.sh \
-WITH THE NAME OF THE PACKAGE YOU DOWNLOADED\
+WITH THE NAME OF THE PACKAGE YOU DOWNLOADED \
 You may have to install with the -u option to update the existing package.
 
 
 ### Anaconda for Windows
 Install python 3 from the windows store. It is easiest to do this by running 'python' from the powershell as it will open the microsoft store for you.
 
-Download the Anaconda Package 
+Download the Anaconda Package \
 https://www.anaconda.com/products/individual#Windows
 
 In Windows, you will have to set the path to the location where you installed Anaconda3 to.
@@ -32,10 +32,46 @@ To test it, open a new dos shell, and you should be able to use conda commands n
 ### Visual Studio Code Setup
 https://code.visualstudio.com/docs/languages/python
 https://medium.com/@udiyosovzon/how-to-activate-conda-environment-in-vs-code-ce599497f20d \
-from an Administrator Powershell prompt change the Powershell Execution Policy to remote signed i.e. Set-ExecutionPolicy RemoteSigned\
+from an Administrator Powershell prompt change the Powershell Execution Policy to remote signed i.e. Set-ExecutionPolicy RemoteSigned \
 open an Anaconda Prompt and run conda init powershell which will add Conda related startup to a Powershell profile.ps1 somewhere in your user's profile.
 
 
 ### Install Tensorflow
-pip install tensorflow --user\
-pip install tensorflow-datasets --user
+pip install tensorflow --user \
+pip install tensorflow-datasets --user \
+pip install tf-nightly-gpu --user \
+
+
+#### If you plan to use CUDA then go through the CUDA instructions here:
+https://docs.nvidia.com/cuda/cuda-installation-guide-microsoft-windows/
+
+#### Download and install Visual Studio 2017 and 2019:
+https://my.visualstudio.com/Download 
+
+#### Download the CUDA Toolkit 11.2.
+Depending on your video card you may need some or all of these. I would suggest running a program that calls for tensorflow to pull from the GPU and see what errors you get, you are looking for .dlls that end in 8, 10, 110, and 11 to say if you need 8, 10.1 or 11.2 to run. \
+I would also highly recommend installing them lowest number to highest number.
+
+8.0 \
+Really all you need is the cudart64_80.dll from the bin folder and copy to your 11.2 bin and rename it to cudnn64_8.dll.
+https://developer.nvidia.com/cuda-80-ga2-download-archive 
+
+Then 10.1: \
+https://developer.nvidia.com/cuda-10.1-download-archive-base 
+
+Then 11.2: \
+https://developer.nvidia.com/cuda-downloads \
+
+
+
+Add the following to your ENV in Windows: \
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\bin \
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\extras\CUPTI\lib64 \
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include \
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\bin \
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\extras\CUPTI\lib64 \
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\include \
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.2\bin \
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.2\extras\CUPTI\lib64 \
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.2\include \
+
