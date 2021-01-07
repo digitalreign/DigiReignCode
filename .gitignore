@@ -1,2 +1,4 @@
 *.npz
-.gitignore*
+.gitignore
+
+logs/
