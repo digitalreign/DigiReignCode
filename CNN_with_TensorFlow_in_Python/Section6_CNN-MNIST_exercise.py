@@ -1,6 +1,7 @@
 # Section CNN - MNIST exercise
 # Author Jose Smith
-# Date: 20210106
+# Start Date: 20210106
+# End Date: 20210107
 
 # Importing the relevant packages
 print('=============Importing the relevant packages================================')
