@@ -1,3 +1,2 @@
 *.npz
 .gitignore*
-CNN_with_TensorFlow_in_Python/6_CNN-MNIST_Example/
