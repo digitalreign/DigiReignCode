@@ -3,7 +3,7 @@
 # Date: 20210106
 
 # Importing the relevant packages
-print('=============Importing the relevant packages===================================')
+print('=============Importing the relevant packages================================')
 import tensorflow as tf
 import tensorflow_datasets as tfds
 # using datetime module 
@@ -29,7 +29,7 @@ BATCH_SIZE = 128
 NUM_EPOCHS = 20
 
 # Downloading the MNIST dataset
-print('=============Downloading the MNIST dataset=====================================')
+print('=============Downloading the MNIST dataset==================================')
 
 # When 'with_info' is set to True, tfds.load() returns two variables: 
 # - the dataset (including the train and test sets) 
@@ -38,11 +38,11 @@ print('=============Downloading the MNIST dataset===============================
 mnist_dataset, mnist_info = tfds.load(name='mnist', with_info=True, as_supervised=True)
 
 # Extracting the train and test datasets
-print('=============Extracting the train and test datasets============================')
+print('=============Extracting the train and test datasets=========================')
 mnist_train, mnist_test = mnist_dataset['train'], mnist_dataset['test']
 
 # Creating a function to scale our image data (it is recommended to scale the pixel values in the range [0,1] )
-print('=============Creating a function to scale our image data=======================')
+print('=============Creating a function to scale our image data====================')
 def scale(image, label):
     image = tf.cast(image, tf.float32)
     image /= 255.
@@ -50,46 +50,46 @@ def scale(image, label):
     return image, label
 
 # Scaling the data
-print('=============Scaling the data==================================================')
+print('=============Scaling the data===============================================')
 train_and_validation_data = mnist_train.map(scale)
 test_data = mnist_test.map(scale)
 
 # Defining the size of the validation set
-print('=============Defining the size of the validation set===========================')
+print('=============Defining the size of the validation set========================')
 num_validation_samples = 0.1 * mnist_info.splits['train'].num_examples
 num_validation_samples = tf.cast(num_validation_samples, tf.int64)
 
 # Defining the size of the test set
-print('=============Defining the size of the test det=================================')
+print('=============Defining the size of the test det==============================')
 num_test_samples = mnist_info.splits['test'].num_examples
 num_test_samples = tf.cast(num_test_samples, tf.int64)
 
 # Reshuffling the dataset
-print('=============Reshuffling the dataset===========================================')
+print('=============Reshuffling the dataset========================================')
 train_and_validation_data = train_and_validation_data.shuffle(BUFFER_SIZE)
 
 # Splitting the dataset into training + validation
-print('=============Splitting the dataset into training and validation================')
+print('=============Splitting the dataset into training and validation=============')
 train_data = train_and_validation_data.skip(num_validation_samples)
 validation_data = train_and_validation_data.take(num_validation_samples)
 
 # Batching the data
 # NOTE: For proper functioning of the model, we need to create one big batch for the validation and test sets
-print('=============Batching the data=================================================')
+print('=============Batching the data==============================================')
 train_data = train_data.batch(BATCH_SIZE)
 validation_data = validation_data.batch(num_validation_samples) 
 test_data = test_data.batch(num_test_samples)
 
 ## Creating the model and training it
-print('===============================================================================')
-print('=============Creating the model and training it================================')
-print('===============================================================================')
+print('============================================================================')
+print('=============Creating the model and training it=============================')
+print('============================================================================')
 # Now that we have preprocessed the dataset, we can define our CNN and train it
 
 # Outlining the model/architecture of our CNN
 
 # CONV -> MAXPOOL -> CONV -> MAXPOOL -> FLATTEN -> DENSE
-print('=============Outlining the model of our CNN====================================')
+print('=============Outlining the model of our CNN=================================')
 model = tf.keras.Sequential([
     tf.keras.layers.Conv2D(50, 5, activation='relu', input_shape=(28, 28, 1)),
     tf.keras.layers.MaxPooling2D(pool_size=(2,2)), 
@@ -101,7 +101,7 @@ model = tf.keras.Sequential([
 ])
 
 # A brief summary of the model and parameters
-print('=============A brief summary of the model and parameters=======================')
+print('=============A brief summary of the model and parameters====================')
 model.summary(line_length = 75)
 
 ''' Model: "sequential"
@@ -125,6 +125,45 @@ Trainable params: 36,360
 Non-trainable params: 0
 ___________________________________________________________________________ '''
 
+print('=============Defining the loss function=====================================')
+# Defining the loss function
+
+
+# In general, our model needs to output probabilities of each class, 
+# which can be achieved with a softmax activation in the last dense layer
+
+# However, when using the softmax activation, the loss can rarely be unstable
+
+# Thus, instead of incorporating the softmax into the model itself,
+# we use a loss calculation that automatically corrects for the missing softmax
+
+# That is the reason for 'from_logits=True'
+loss_fn = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
+
+print('=============Compiling the model with Adam optimizer========================')
+# Compiling the model with Adam optimizer and the cathegorical crossentropy as a loss function
+model.compile(optimizer='adam', loss=loss_fn, metrics=['accuracy'])
+
+print('=============Defining early stopping to prevent overfitting=================')
+# Defining early stopping to prevent overfitting
+early_stopping = tf.keras.callbacks.EarlyStopping(
+    monitor = 'val_loss',
+    mode = 'auto',    
+    min_delta = 0,
+    patience = 2,
+    verbose = 0, 
+    restore_best_weights = True
+)
+
+print('=============Train the network==============================================')
+# Train the network
+model.fit(
+    train_data, 
+    epochs = NUM_EPOCHS, 
+    callbacks = [early_stopping], 
+    validation_data = validation_data,
+    verbose = 2
+)
 
 
 

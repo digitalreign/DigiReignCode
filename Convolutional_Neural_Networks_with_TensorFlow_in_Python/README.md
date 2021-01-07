@@ -53,18 +53,20 @@ Depending on your video card you may need some or all of these. I would suggest 
 I would also highly recommend installing them lowest number to highest number.
 
 8.0 \
-Really all you need is the cudart64_80.dll from the bin folder and copy to your 11.2 bin and rename it to cudnn64_8.dll.
 https://developer.nvidia.com/cuda-80-ga2-download-archive 
 
 Then 10.1: \
 https://developer.nvidia.com/cuda-10.1-download-archive-base 
 
 Then 11.2: \
-https://developer.nvidia.com/cuda-downloads \
+https://developer.nvidia.com/cuda-downloads
+
+cuDNN for your CUDA version. \
+I placed the cuda directory in the base C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\ \
+https://developer.nvidia.com/rdp/cudnn-archive
 
 
-
-Add the following to your ENV in Windows: \
+Add the following to your ENV in Windows depending on what versions you need: \
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\bin \
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\extras\CUPTI\lib64 \
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include \
@@ -73,5 +75,9 @@ C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\extras\CUPTI\lib64 \
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\include \
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.2\bin \
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.2\extras\CUPTI\lib64 \
-C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.2\include \
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.2\include 
 
+You have to include this one: \
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\cuda\bin \
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\cuda\include \
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\cuda\lib\x64
