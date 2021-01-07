@@ -13,7 +13,9 @@ import datetime
 programstart = datetime.datetime.now() 
 
 ## Downloading and preprocessing the data
-
+print('-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=')
+print('=============Downloading and preprocessing the data=========================')
+print('-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=')
 # Defining some constants/hyperparameters
 BUFFER_SIZE = 70_000 # for reshuffling
 BATCH_SIZE = 128
@@ -114,7 +116,9 @@ log_dir = "logs\\fit\\" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
 tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1)
 
 # Train the network
-print('=============Train the network==============================================')
+print('-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=')
+print('=============Creating the model and training it=============================')
+print('-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=')
 model.fit(
     train_data, 
     epochs = NUM_EPOCHS, 
@@ -151,9 +155,18 @@ Epoch 13/20
 Epoch 14/20
 422/422 - 3s - loss: 0.0116 - accuracy: 0.9961 - val_loss: 0.0126 - val_accuracy: 0.9972 '''
 
+## Testing our model
+print('-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=')
+print('=============Testing our model==============================================')
+print('-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=')
 
+# Testing our model
+test_loss, test_accuracy = model.evaluate(test_data)
+''' 1/1 [==============================] - 1s 612ms/step - loss: 0.0316 - accuracy: 0.9907 '''
 
-
+# Printing the test results
+print('Test loss: {0:.4f}. Test accuracy: {1:.2f}%'.format(test_loss, test_accuracy*100.))
+''' Test loss: 0.0316. Test accuracy: 99.07% '''
 
 # programend stores current time 
 programend = datetime.datetime.now()
