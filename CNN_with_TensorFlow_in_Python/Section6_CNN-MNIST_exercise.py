@@ -14,15 +14,6 @@ programstart = datetime.datetime.now()
 
 ## Downloading and preprocessing the data
 
-# Before continuing with our model and training, our first job is to preprocess the dataset
-# This is a very important step in all of machine learning
-
-# The MNIST dataset is, in general, highly processed already - after all its 28x28 grayscale images of clearly visible digits
-# Thus, our preprocessing will be limited to scaling the pixel values, shuffling the data and creating a validation set
-
-# NOTE: When finally deploying a model in practice, it might be a good idea to include the prerpocessing as initial layers
-# In that way, the users could just plug the data (images) directly, instead of being required to resize/rescale it before
-
 # Defining some constants/hyperparameters
 BUFFER_SIZE = 70_000 # for reshuffling
 BATCH_SIZE = 128
@@ -118,16 +109,6 @@ ___________________________________________________________________________ '''
 
 # Defining the loss function
 
-
-# In general, our model needs to output probabilities of each class, 
-# which can be achieved with a softmax activation in the last dense layer
-
-# However, when using the softmax activation, the loss can rarely be unstable
-
-# Thus, instead of incorporating the softmax into the model itself,
-# we use a loss calculation that automatically corrects for the missing softmax
-
-# That is the reason for 'from_logits=True'
 loss_fn = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
 
 # Compiling the model with Adam optimizer and the cathegorical crossentropy as a loss function
@@ -239,5 +220,7 @@ plt.show()
 
 # programend stores current time 
 programend = datetime.datetime.now()
-print("Program Started:-", programstart) 
-print("Program Ended:-", programend) 
+roundedstart = programstart - datetime.timedelta(microseconds=programstart.microsecond)
+roundedend = programend - datetime.timedelta(microseconds=programend.microsecond)
+print("Program Started:-", roundedstart) 
+print("Program Ended:-", roundedend) 
