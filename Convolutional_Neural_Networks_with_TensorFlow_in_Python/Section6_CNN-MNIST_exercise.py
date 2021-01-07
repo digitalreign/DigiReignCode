@@ -38,11 +38,9 @@ print('=============Downloading the MNIST dataset===============================
 mnist_dataset, mnist_info = tfds.load(name='mnist', with_info=True, as_supervised=True)
 
 # Extracting the train and test datasets
-print('=============Extracting the train and test datasets=========================')
 mnist_train, mnist_test = mnist_dataset['train'], mnist_dataset['test']
 
 # Creating a function to scale our image data (it is recommended to scale the pixel values in the range [0,1] )
-print('=============Creating a function to scale our image data====================')
 def scale(image, label):
     image = tf.cast(image, tf.float32)
     image /= 255.
@@ -50,46 +48,39 @@ def scale(image, label):
     return image, label
 
 # Scaling the data
-print('=============Scaling the data===============================================')
 train_and_validation_data = mnist_train.map(scale)
 test_data = mnist_test.map(scale)
 
 # Defining the size of the validation set
-print('=============Defining the size of the validation set========================')
 num_validation_samples = 0.1 * mnist_info.splits['train'].num_examples
 num_validation_samples = tf.cast(num_validation_samples, tf.int64)
 
 # Defining the size of the test set
-print('=============Defining the size of the test det==============================')
 num_test_samples = mnist_info.splits['test'].num_examples
 num_test_samples = tf.cast(num_test_samples, tf.int64)
 
 # Reshuffling the dataset
-print('=============Reshuffling the dataset========================================')
 train_and_validation_data = train_and_validation_data.shuffle(BUFFER_SIZE)
 
 # Splitting the dataset into training + validation
-print('=============Splitting the dataset into training and validation=============')
 train_data = train_and_validation_data.skip(num_validation_samples)
 validation_data = train_and_validation_data.take(num_validation_samples)
 
 # Batching the data
 # NOTE: For proper functioning of the model, we need to create one big batch for the validation and test sets
-print('=============Batching the data==============================================')
 train_data = train_data.batch(BATCH_SIZE)
 validation_data = validation_data.batch(num_validation_samples) 
 test_data = test_data.batch(num_test_samples)
 
 ## Creating the model and training it
-print('============================================================================')
+print('-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=')
 print('=============Creating the model and training it=============================')
-print('============================================================================')
+print('-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=')
 # Now that we have preprocessed the dataset, we can define our CNN and train it
 
 # Outlining the model/architecture of our CNN
 
 # CONV -> MAXPOOL -> CONV -> MAXPOOL -> FLATTEN -> DENSE
-print('=============Outlining the model of our CNN=================================')
 model = tf.keras.Sequential([
     tf.keras.layers.Conv2D(50, 5, activation='relu', input_shape=(28, 28, 1)),
     tf.keras.layers.MaxPooling2D(pool_size=(2,2)), 
@@ -125,7 +116,6 @@ Trainable params: 36,360
 Non-trainable params: 0
 ___________________________________________________________________________ '''
 
-print('=============Defining the loss function=====================================')
 # Defining the loss function
 
 
@@ -140,11 +130,9 @@ print('=============Defining the loss function==================================
 # That is the reason for 'from_logits=True'
 loss_fn = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
 
-print('=============Compiling the model with Adam optimizer========================')
 # Compiling the model with Adam optimizer and the cathegorical crossentropy as a loss function
 model.compile(optimizer='adam', loss=loss_fn, metrics=['accuracy'])
 
-print('=============Defining early stopping to prevent overfitting=================')
 # Defining early stopping to prevent overfitting
 early_stopping = tf.keras.callbacks.EarlyStopping(
     monitor = 'val_loss',
@@ -188,12 +176,11 @@ Epoch 11/20
 422/422 - 3s - loss: 0.0176 - accuracy: 0.9945 - val_loss: 0.0188 - val_accuracy: 0.9960 """
 
 ## Testing our model
-print('============================================================================')
+print('-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=')
 print('=============Testing our model==============================================')
-print('============================================================================')
+print('-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=')
 
 # Testing our model
-print('=============Testing our model==============================================')
 test_loss, test_accuracy = model.evaluate(test_data)
 
 """1/1 [==============================] - 1s 622ms/step - loss: 0.0310 - accuracy: 0.9911"""
@@ -203,6 +190,50 @@ print('=============Printing the test results===================================
 print('Test loss: {0:.4f}. Test accuracy: {1:.2f}%'.format(test_loss, test_accuracy*100.))
 
 """ Test loss: 0.0310. Test accuracy: 99.11% """
+
+### Plotting images and the results
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Split the test_data into 2 arrays, containing the images and the corresponding labels
+for images, labels in test_data.take(1):
+    images_test = images.numpy()
+    labels_test = labels.numpy()
+
+# Reshape the images into 28x28 form, suitable for matplotlib (original dimensions: 28x28x1)
+images_plot = np.reshape(images_test, (10000,28,28))
+
+# The image to be displayed and tested
+i = 502
+
+
+# Plot the image
+plt.figure(figsize=(2, 2))
+plt.axis('off')
+plt.imshow(images_plot[i-1], cmap="gray", aspect='auto')
+plt.show()
+
+# Print the correct label for the image
+print('=============Printing the correct label for the image=======================')
+print("Label: {}".format(labels_test[i-1]))
+
+""" Label: 5 """
+
+# Obtain the model's predictions (logits)
+predictions = model.predict(images_test[i-1:i])
+
+# Convert those predictions into probabilities (recall that we incorporated the softmaxt activation into the loss function)
+probabilities = tf.nn.softmax(predictions).numpy()
+
+# Convert the probabilities into percentages
+probabilities = probabilities*100
+
+# Create a bar chart to plot the probabilities for each class
+print('=============Create a bar chart to plot the probabilities for each class====')
+plt.figure(figsize=(12,5))
+plt.bar(x=[1,2,3,4,5,6,7,8,9,10], height=probabilities[0], tick_label=["0","1","2","3","4","5","6","7","8","9"])
+plt.show()
 
 # programend stores current time 
 programend = datetime.datetime.now()
