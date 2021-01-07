@@ -123,6 +123,34 @@ model.fit(
     verbose = 2
 )
 
+''' 422/422 - 7s - loss: 0.2642 - accuracy: 0.9266 - val_loss: 0.0791 - val_accuracy: 0.9767
+Epoch 2/20
+422/422 - 3s - loss: 0.0702 - accuracy: 0.9789 - val_loss: 0.0473 - val_accuracy: 0.9872
+Epoch 3/20
+422/422 - 3s - loss: 0.0505 - accuracy: 0.9851 - val_loss: 0.0408 - val_accuracy: 0.9880
+Epoch 4/20
+422/422 - 3s - loss: 0.0417 - accuracy: 0.9872 - val_loss: 0.0326 - val_accuracy: 0.9905
+Epoch 5/20
+422/422 - 3s - loss: 0.0360 - accuracy: 0.9892 - val_loss: 0.0352 - val_accuracy: 0.9883
+Epoch 6/20
+422/422 - 3s - loss: 0.0318 - accuracy: 0.9901 - val_loss: 0.0296 - val_accuracy: 0.9897
+Epoch 7/20
+422/422 - 3s - loss: 0.0273 - accuracy: 0.9916 - val_loss: 0.0203 - val_accuracy: 0.9930
+Epoch 8/20
+422/422 - 3s - loss: 0.0235 - accuracy: 0.9928 - val_loss: 0.0215 - val_accuracy: 0.9933
+Epoch 9/20
+422/422 - 3s - loss: 0.0205 - accuracy: 0.9934 - val_loss: 0.0196 - val_accuracy: 0.9938
+Epoch 10/20
+422/422 - 3s - loss: 0.0191 - accuracy: 0.9940 - val_loss: 0.0179 - val_accuracy: 0.9938
+Epoch 11/20
+422/422 - 3s - loss: 0.0161 - accuracy: 0.9949 - val_loss: 0.0118 - val_accuracy: 0.9967
+Epoch 12/20
+422/422 - 3s - loss: 0.0139 - accuracy: 0.9956 - val_loss: 0.0103 - val_accuracy: 0.9972
+Epoch 13/20
+422/422 - 3s - loss: 0.0123 - accuracy: 0.9959 - val_loss: 0.0104 - val_accuracy: 0.9960
+Epoch 14/20
+422/422 - 3s - loss: 0.0116 - accuracy: 0.9961 - val_loss: 0.0126 - val_accuracy: 0.9972 '''
+
 
 
 
