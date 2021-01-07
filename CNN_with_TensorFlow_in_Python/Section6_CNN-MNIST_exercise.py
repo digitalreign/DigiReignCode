@@ -6,10 +6,9 @@
 print('=============Importing the relevant packages================================')
 import tensorflow as tf
 import tensorflow_datasets as tfds
-# using datetime module 
-import datetime; 
   
 # programstart stores current time 
+import datetime; 
 programstart = datetime.datetime.now() 
 
 ## Downloading and preprocessing the data
