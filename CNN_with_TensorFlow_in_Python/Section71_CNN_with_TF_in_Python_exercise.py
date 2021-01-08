@@ -168,9 +168,32 @@ test_loss, test_accuracy = model.evaluate(test_data)
 print('Test loss: {0:.4f}. Test accuracy: {1:.2f}%'.format(test_loss, test_accuracy*100.))
 ''' Test loss: 0.0316. Test accuracy: 99.07% '''
 
+print('-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=')
+print('=============Visualizing in Tensorboard=====================================')
+print('-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=')
+
 # programend stores current time 
 programend = datetime.datetime.now()
 roundedstart = programstart - datetime.timedelta(microseconds=programstart.microsecond)
 roundedend = programend - datetime.timedelta(microseconds=programend.microsecond)
 print("Program Started:-", roundedstart) 
 print("Program Ended:-", roundedend) 
+
+# Loading the Tensorboard extension
+# This code will stop the program and run tensorboard.
+# TensorBoard 2.4.0 can be accessed at http://localhost:6006/ (Press CTRL+C to quit)
+
+import os
+osdir = os.getcwd()
+os.system('python -m tensorboard.main --logdir {}\\logs\\fit'.format(osdir))
+
+# The code below is much cleaner but is a jupyter extension:
+# %load_ext tensorboard
+# %tensorboard --logdir "logs/fit"
+
+# TO KILL TENSORBOARD IN WINDOWS: 
+# command line> taskkill /im tensorboard.exe /f
+# command line> del /q %TMP%\.tensorboard-info\*
+
+
+
