@@ -1,10 +1,18 @@
 # Section CNN - MNIST exercise with Tensorboard
 # Author Jose Smith
 # Start Date: 20210107
-# End Date: 20210108
+# End Date: 
 
 # Importing the relevant packages
 print('=============Importing the relevant packages================================')
+import io
+import itertools
+
+import numpy as np
+import sklearn.metrics
+
+import matplotlib.pyplot as plt
+
 import tensorflow as tf
 import tensorflow_datasets as tfds
 import datetime
@@ -57,6 +65,11 @@ train_data = train_data.batch(BATCH_SIZE)
 validation_data = validation_data.batch(num_validation_samples)
 test_data = test_data.batch(num_test_samples)
 
+# Extracting the numpy arrays from the validation data for the calculation of the Confusion Matrix
+for images, labels in validation_data:
+    images_val = images.numpy()
+    labels_val = labels.numpy()
+
 ## Creating the model and training it
 
 # Outlining the model/architecture of our CNN
@@ -101,6 +114,83 @@ loss_fn = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
 # Compiling the model with Adam optimizer and the cathegorical crossentropy as a loss function
 model.compile(optimizer='adam', loss=loss_fn, metrics=['accuracy'])
 
+log_dir = "logs\\fit\\" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S") + "CM"
+
+def plot_confusion_matrix(cm, class_names):
+    """
+    Returns a matplotlib figure containing the plotted confusion matrix.
+
+    Args:
+    cm (array, shape = [n, n]): a confusion matrix of integer classes
+    class_names (array, shape = [n]): String names of the integer classes
+    """
+    figure = plt.figure(figsize=(12, 12))
+    plt.imshow(cm, interpolation='nearest', cmap=plt.cm.Blues)
+    plt.title("Confusion matrix")
+    plt.colorbar()
+    tick_marks = np.arange(len(class_names))
+    plt.xticks(tick_marks, class_names, rotation=45)
+    plt.yticks(tick_marks, class_names)
+
+    # Normalize the confusion matrix.
+    cm = np.around(cm.astype('float') / cm.sum(axis=1)[:, np.newaxis], decimals=2)
+
+    # Use white text if squares are dark; otherwise black.
+    threshold = cm.max() / 2.
+    for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
+        color = "white" if cm[i, j] > threshold else "black"
+        plt.text(j, i, cm[i, j], horizontalalignment="center", color=color)
+
+    plt.tight_layout()
+    plt.ylabel('True label')
+    plt.xlabel('Predicted label')
+    
+    return figure
+
+def plot_to_image(figure):
+    """Converts the matplotlib plot specified by 'figure' to a PNG image and
+    returns it. The supplied figure is closed and inaccessible after this call."""
+    
+    # Save the plot to a PNG in memory.
+    buf = io.BytesIO()
+    plt.savefig(buf, format='png')
+    
+    # Closing the figure prevents it from being displayed directly inside the notebook.
+    plt.close(figure)
+    
+    buf.seek(0)
+    
+    # Convert PNG buffer to TF image
+    image = tf.image.decode_png(buf.getvalue(), channels=4)
+    
+    # Add the batch dimension
+    image = tf.expand_dims(image, 0)
+    
+    return image
+
+# Define a file writer variable for logging purposes
+file_writer_cm = tf.summary.create_file_writer(log_dir + '/cm')
+
+def log_confusion_matrix(epoch, logs):
+    # Use the model to predict the values from the validation dataset.
+    test_pred_raw = model.predict(images_val)
+    test_pred = np.argmax(test_pred_raw, axis=1)
+
+    # Calculate the confusion matrix.
+    cm = sklearn.metrics.confusion_matrix(labels_val, test_pred)
+    
+    # Log the confusion matrix as an image summary.
+    figure = plot_confusion_matrix(cm, class_names=['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'])
+    cm_image = plot_to_image(figure)
+
+    # Log the confusion matrix as an image summary.
+    with file_writer_cm.as_default():
+        tf.summary.image("Confusion Matrix", cm_image, step=epoch)
+
+# Defining the callbacks
+cm_callback = tf.keras.callbacks.LambdaCallback(on_epoch_end=log_confusion_matrix)
+tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1, profile_batch=0)
+
 # Defining early stopping to prevent overfitting
 early_stopping = tf.keras.callbacks.EarlyStopping(
     monitor = 'val_loss',
@@ -111,10 +201,6 @@ early_stopping = tf.keras.callbacks.EarlyStopping(
     restore_best_weights = True
 )
 
-# Logging the training process data to use later in tensorboard
-log_dir = "logs\\fit\\" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1)
-
 # Train the network
 print('-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=')
 print('=============Creating the model and training it=============================')
@@ -122,7 +208,7 @@ print('-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 model.fit(
     train_data, 
     epochs = NUM_EPOCHS, 
-    callbacks = [tensorboard_callback, early_stopping], 
+    callbacks = [tensorboard_callback, cm_callback, early_stopping], 
     validation_data = validation_data,
     verbose = 2
 )
