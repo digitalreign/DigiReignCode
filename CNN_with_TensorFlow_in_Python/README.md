@@ -29,7 +29,7 @@ You can do this via powershell (see above, https://msdn.microsoft.com/en-us/libr
 To test it, open a new dos shell, and you should be able to use conda commands now. E.g., try conda --version.
 
 ### Install Jupyter
-pip install jupyterlab
+pip install jupyterlab --user
 
 ### Visual Studio Code Setup
 https://code.visualstudio.com/docs/languages/python
@@ -45,6 +45,7 @@ pip install tf-nightly-gpu --user \
 
 
 #### If you plan to use CUDA then go through the CUDA instructions here:
+https://developer.nvidia.com/cuda-gpus \
 https://docs.nvidia.com/cuda/cuda-installation-guide-microsoft-windows/
 
 #### Download and install Visual Studio 2017 and 2019:
@@ -83,3 +84,6 @@ You have to include this one: \
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\cuda\bin \
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\cuda\include \
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\cuda\lib\x64
+
+#### Troubleshooting
+You may have to copy C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.2\extras\CUPTI\lib64\cupti64_2020.X.X.dll (X being a variety based on your download) to C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.2\bin\cupti64_110.dl
