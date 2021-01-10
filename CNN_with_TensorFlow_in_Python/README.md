@@ -87,3 +87,6 @@ C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\cuda\lib\x64
 
 #### Troubleshooting
 You may have to copy C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.2\extras\CUPTI\lib64\cupti64_2020.X.X.dll (X being a variety based on your download) to C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.2\bin\cupti64_110.dl
+
+Allocator (GPU_0_bfc) ran out of memory trying to allocate errors can be fixed with:
+https://www.tensorflow.org/guide/gpu#limiting_gpu_memory_growth
