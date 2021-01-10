@@ -28,6 +28,8 @@ You can do this via powershell (see above, https://msdn.microsoft.com/en-us/libr
 
 To test it, open a new dos shell, and you should be able to use conda commands now. E.g., try conda --version.
 
+### Install Jupyter
+pip install jupyterlab
 
 ### Visual Studio Code Setup
 https://code.visualstudio.com/docs/languages/python
