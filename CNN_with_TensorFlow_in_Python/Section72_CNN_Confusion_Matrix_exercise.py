@@ -133,7 +133,7 @@ def plot_confusion_matrix(cm, class_names):
     plt.yticks(tick_marks, class_names)
 
     # Normalize the confusion matrix.
-    cm = np.around(cm.astype('float') / cm.sum(axis=1)[:, np.newaxis], decimals=2)
+    cm = np.around(cm.astype('float') / cm.sum(axis=1)[:, np.newaxis], decimals=3)
 
     # Use white text if squares are dark; otherwise black.
     threshold = cm.max() / 2.
