@@ -6,6 +6,8 @@ Welcome to my quilt of knowledge pertaining to Machine Learning. I am going to b
 ## d3
 
 ## Keras
+Explination of keras optimizers: \
+https://machinelearningknowledge.ai/keras-optimizers-explained-with-examples-for-beginners/
 
 ## Tensorflow
 
