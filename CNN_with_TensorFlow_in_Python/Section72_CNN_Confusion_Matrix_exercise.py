@@ -1,7 +1,7 @@
 # Section CNN - MNIST exercise with Tensorboard
 # Author Jose Smith
 # Start Date: 20210107
-# End Date: 
+# End Date: 20210112
 
 # Importing the relevant packages
 print('=============Importing the relevant packages================================')
