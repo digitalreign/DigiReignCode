@@ -64,7 +64,7 @@ print('=============Defining Hyperparameters=========================+++++++++++
 
 # Defining the hypermatarest we would test and their range
 HP_FILTER_SIZE = hp.HParam('filter_size', hp.Discrete([3,5,7]))
-HP_OPTIMIZER = hp.HParam('optimizer', hp.Discrete(['adam', 'sgd']))
+HP_OPTIMIZER = hp.HParam('optimizer', hp.Discrete(['adam', 'adagrad', 'rmsprop', 'adadelta', 'sgd']))
 
 METRIC_ACCURACY = 'accuracy'
 
@@ -138,10 +138,10 @@ for filter_size in HP_FILTER_SIZE.domain.values:
             HP_FILTER_SIZE: filter_size,
             HP_OPTIMIZER: optimizer
         }
-        run_name = "run-%d" % session_num
+        run_name = "run-%d" % session_num 
         print('--- Starting trial: %s' % run_name)
         print({h.name: hparams[h] for h in hparams})
-        run('logs/hparam_tuning/' + run_name, hparams)
+        run('logs/hparam_tuning/' + datetime.datetime.now().strftime("%Y%m%d-%H%M%S"), hparams)
 
         session_num += 1
 
