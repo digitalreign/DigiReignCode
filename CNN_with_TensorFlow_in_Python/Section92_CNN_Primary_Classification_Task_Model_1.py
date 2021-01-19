@@ -2,8 +2,6 @@
 # Author Jose Smith
 # Start Date: 20210119
 # End Date:
-# You will need to run this in the base 9_Practical_Project directory as the code is going to look for a Dataset directory and create a Logs directory, you can change the code so that it runs from a higher directory but keep this in mind.
-
 
 # Importing the relevant packages
 print('=============Importing the relevant packages================================')
@@ -26,6 +24,7 @@ programstart = datetime.datetime.now()
 # Loading the datasets
 print('=============Loading the datasets===========================================')
 
+# I have been running this code in the base git directory and in this case I am pulling images from the 9_Practical_Project sub directory where the dataset is being held.
 data_train = np.load(r"CNN_with_TensorFlow_in_Python/9_Practical_Project/Dataset/Primary categories - Train.npz")
 data_val = np.load(r"CNN_with_TensorFlow_in_Python/9_Practical_Project/Dataset/Primary categories - Validation.npz")
 data_test = np.load(r"CNN_with_TensorFlow_in_Python/9_Practical_Project/Dataset/Primary categories - Test.npz")
@@ -241,9 +240,9 @@ print("Program Ended:-", roundedend)
 
 import os
 osdir = os.getcwd()
+# This code will show the hparam tuning, comment it and uncomment the fit line if you want the to see the fit instead.
 os.system('python -m tensorboard.main --logdir {}\\logs\\Model_1\\hparam_tuning'.format(osdir))
-
-os.system('python -m tensorboard.main --logdir {}\\logs\\Model_1\\fit'.format(osdir))
+# os.system('python -m tensorboard.main --logdir {}\\logs\\Model_1\\fit'.format(osdir))
 
 
 # The code below is much cleaner but is a jupyter extension:
