@@ -1,4 +1,4 @@
-# Section CNN - Primary Classification Task - Model 1
+# Section CNN - Comparing Trousers and Jeans Techniques
 # Author Jose Smith
 # Start Date: 20210121
 # End Date: 
