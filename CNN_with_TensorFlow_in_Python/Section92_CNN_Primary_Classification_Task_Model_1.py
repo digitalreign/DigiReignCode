@@ -241,6 +241,7 @@ print("Program Ended:-", roundedend)
 import os
 osdir = os.getcwd()
 # This code will show the hparam tuning, comment it and uncomment the fit line if you want the to see the fit instead.
+# I need to figure out how to clean this up so that it asks what you want to look at.
 os.system('python -m tensorboard.main --logdir {}\\logs\\Model_1\\hparam_tuning'.format(osdir))
 # os.system('python -m tensorboard.main --logdir {}\\logs\\Model_1\\fit'.format(osdir))
 
