@@ -240,10 +240,11 @@ print("Program Ended:-", roundedend)
 
 import os
 osdir = os.getcwd()
-# This code will show the hparam tuning, comment it and uncomment the fit line if you want the to see the fit instead.
-# I need to figure out how to clean this up so that it asks what you want to look at.
+# I have a windows cleanup script here to clear out tensorboard.
 os.system('python -m tensorboard.main --logdir {}\\logs\\Model_1\\hparam_tuning'.format(osdir))
-# os.system('python -m tensorboard.main --logdir {}\\logs\\Model_1\\fit'.format(osdir))
+os.system('taskkill /im tensorboard.exe /f')
+os.system('del /q %TMP%\.tensorboard-info\*')
+os.system('python -m tensorboard.main --logdir {}\\logs\\Model_1\\fit'.format(osdir))
 
 
 # The code below is much cleaner but is a jupyter extension:
