@@ -34,6 +34,9 @@ The Keras deep learning neural network library provides the capability to fit mo
 https://machinelearningmastery.com/how-to-configure-image-data-augmentation-when-training-deep-learning-neural-networks/
 
 ## Tensorflow
+### Layers
+https://missinglink.ai/guides/tensorflow/tensorflow-conv2d-layers-practical-guide/ 
+
 ### Saving and Loading pb files into Tensorflow
 https://leimao.github.io/blog/Save-Load-Inference-From-TF-Frozen-Graph/
 
