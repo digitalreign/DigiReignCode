@@ -10,11 +10,18 @@ https://machinelearningmastery.com/start-here/
 
 ### Keras Optimizers:
 Keras provides APIs for various implementations of Optimizers. You will find the following types of optimizers in Keras – \
-SGD \
-RMSprop \
-Adam \
-Adadelta \
-Adagrad \
+SGD - SGD optimizer uses gradient descent along with momentum. In this type of optimizer, a subset of batches is used for gradient calculation. \
+RMSprop - In the RMSProp optimizer, the aim is to ensure a constant movement of the average of square of gradients. And secondly, the division of gradient by average’s root is also performed.\
+Adam -The adam optimizer uses adam algorithm in which the stochastic gradient descent method is leveraged for performing the optimization process. It is efficient to use and consumes very little memory. It is appropriate in cases where huge amount of data and parameters are available for usage. \
+
+Keras Adam Optimizer is the most popular and widely used optimizer for neural network training. \
+Adadelta - In Adadelta optimizer,  it uses an adaptive learning rate with stochastic gradient descent method. Adadelta is useful to counter two drawbacks: \
+
+The continuous learning rate degradation during training. \
+It also solves the problem of the global learning rate. \
+Adagrad - Keras Adagrad optimizer has learning rates that use specific parameters. Based on the frequency of updates received by a parameter, the working takes place. \
+
+Even the learning rate is adjusted according to the individual features. This means there are different learning rates for some weights. \
 Adamax \
 Nadam \
 Ftrl \
