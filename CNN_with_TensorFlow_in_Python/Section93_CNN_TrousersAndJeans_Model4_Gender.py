@@ -1,7 +1,7 @@
-# Section CNN - Trousers and Jeans - All - Model 2
+# Section CNN - Trousers and Jeans - Model 4 - Gender
 # Author Jose Smith
 # Start Date: 20210121
-# End Date:
+# End Date: 20210126
 ### Changed all the Model Directories to Model_4
 
 # Importing the relevant packages
