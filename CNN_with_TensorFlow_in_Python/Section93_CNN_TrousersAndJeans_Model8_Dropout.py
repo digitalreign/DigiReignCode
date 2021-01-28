@@ -1,4 +1,4 @@
-# Section CNN - Trousers and Jeans - Model 7 - L2 Regularization
+# Section CNN - Trousers and Jeans - Model 8 - Dropout
 # Author Jose Smith
 # Start Date: 20210128
 # End Date: 20210128
@@ -17,6 +17,8 @@ from tensorboard.plugins.hparams import api as hp
 import matplotlib.pyplot as plt
 
 import datetime
+
+from tensorflow.python.keras.layers.core import Dropout
 
 # programstart stores current time 
 programstart = datetime.datetime.now() 
@@ -47,13 +49,10 @@ images_val = images_val/255.0
 images_test = images_test/255.0
 
 # Defining constants
-### Updated to 20 Epochs ###
 EPOCHS = 20
 BATCH_SIZE = 64
 
 # Defining the hyperparameters we would tune, and their values to be tested
-### For this model I am hardcoding the parameters that were the most successful from the last model run. ###
-### Added HP_LAMBDA_REG so that we can change the L2 variable. ###
 #HP_FILTER_SIZE_1 = hp.HParam('filter_size_1', hp.Discrete([3,5,7]))
 #HP_FILTER_NUM = hp.HParam('filters_number', hp.Discrete([32,64,96,128]))
 #HP_FILTER_SIZE_2 = hp.HParam('filter_size_2', hp.Discrete([3,5]))
@@ -62,14 +61,16 @@ HP_FILTER_SIZE_1 = hp.HParam('filter_size_1', hp.Discrete([5]))
 HP_FILTER_NUM = hp.HParam('filters_number', hp.Discrete([32]))
 HP_FILTER_SIZE_2 = hp.HParam('filter_size_2', hp.Discrete([3]))
 HP_DENSE_SIZE = hp.HParam('dense_size', hp.Discrete([256]))
-HP_LAMBDA_REG = hp.HParam('lambda', hp.Discrete([0.0, 1e-5, 3e-5, 7e-5, 9e-5, 1e-4, 3e-4, 5e-4, 7e-4, 9e-4, 1e-3, 3e-3, 5e-3, 7e-3, 9e-3, 1e-2, 3e-2, 5e-2, 7e-2, 9e-2, 0.1]))
+### Removed Lambda and added dropout variable and each percent is a tenth of a point. ###
+HP_DROPOUT = hp.HParam('dropout', hp.Discrete([0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]))
+
 
 METRIC_ACCURACY = 'accuracy'
 
 # Logging setup info
-with tf.summary.create_file_writer(r'logs/Model_7_L2Reg/hparam_tuning/').as_default():
+with tf.summary.create_file_writer(r'logs/Model_8_Dropout/hparam_tuning/').as_default():
     hp.hparams_config(
-        hparams=[HP_FILTER_SIZE_1, HP_FILTER_NUM, HP_FILTER_SIZE_2, HP_DENSE_SIZE, HP_LAMBDA_REG],
+        hparams=[HP_FILTER_SIZE_1, HP_FILTER_NUM, HP_FILTER_SIZE_2, HP_DENSE_SIZE, HP_DROPOUT],
         metrics=[hp.Metric(METRIC_ACCURACY, display_name='Accuracy')],
     )
 # Wrapping our model and training in a function
@@ -78,27 +79,24 @@ print('=============Wrapping our model and training in a function===============
 def train_test_model(hparams, session_num):
     
     # Outlining the model/architecture of our CNN
-### Added the L2 regularization ###
+### Added dropout to the Dense Layer###
+### Removed kernel regularizer###
     model = tf.keras.Sequential([
-        tf.keras.layers.Conv2D(hparams[HP_FILTER_NUM], hparams[HP_FILTER_SIZE_1], activation='relu', input_shape=(120,90,3), kernel_regularizer=tf.keras.regularizers.l2(hparams[HP_LAMBDA_REG])),
+        tf.keras.layers.Conv2D(hparams[HP_FILTER_NUM], hparams[HP_FILTER_SIZE_1], activation='relu', input_shape=(120,90,3)),
         tf.keras.layers.MaxPooling2D(pool_size=(2,2)),
-        tf.keras.layers.Conv2D(hparams[HP_FILTER_NUM], hparams[HP_FILTER_SIZE_2], activation='relu', kernel_regularizer=tf.keras.regularizers.l2(hparams[HP_LAMBDA_REG])),
+        tf.keras.layers.Conv2D(hparams[HP_FILTER_NUM], hparams[HP_FILTER_SIZE_2], activation='relu'),
         tf.keras.layers.MaxPooling2D(pool_size=(2,2)),
         tf.keras.layers.Flatten(),
-        tf.keras.layers.Dense(hparams[HP_DENSE_SIZE], activation='relu', kernel_regularizer=tf.keras.regularizers.l2(hparams[HP_LAMBDA_REG])),
+        tf.keras.layers.Dense(hparams[HP_DENSE_SIZE], activation='relu'),
+        tf.keras.layers.Dropout(hparams[HP_DROPOUT]),
         tf.keras.layers.Dense(4)
     ])
 
     # Defining the loss function
-    ### Added variable name to loss ###
     loss_fn = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
 
     # Compiling the model with parameter value for the optimizer
-    model.compile(optimizer='adam', loss=loss_fn, metrics=['accuracy', tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True, name='sparse_categorical_crossentropy')])
-
-    # Defining the logging directory
-    log_dir = "logs\\Model_7_L2Reg\\fit\\" + "run-{}".format(session_num)
-    
+    model.compile(optimizer='adam', loss=loss_fn, metrics=['accuracy'])
     
     def plot_confusion_matrix(cm, class_names):
         """
@@ -108,7 +106,7 @@ def train_test_model(hparams, session_num):
           cm (array, shape = [n, n]): a confusion matrix of integer classes
           class_names (array, shape = [n]): String names of the integer classes
         """
-        figure = plt.figure(figsize=(12, 12))
+        figure = plt.figure(figsize=(8, 8))
         plt.imshow(cm, interpolation='nearest', cmap=plt.cm.Blues)
         plt.title("Confusion matrix")
         plt.colorbar()
@@ -117,7 +115,7 @@ def train_test_model(hparams, session_num):
         plt.yticks(tick_marks, class_names)
 
         # Normalize the confusion matrix.
-        cm = np.around(cm.astype('float') / cm.sum(axis=1)[:, np.newaxis], decimals=3)
+        cm = np.around(cm.astype('float') / cm.sum(axis=1)[:, np.newaxis], decimals=2)
 
         # Use white text if squares are dark; otherwise black.
         threshold = cm.max() / 2.
@@ -129,6 +127,13 @@ def train_test_model(hparams, session_num):
         plt.ylabel('True label')
         plt.xlabel('Predicted label')
         return figure
+
+    # Defining the logging directory
+    log_dir = "logs\\Model_8_Dropout\\fit\\" + "run-{}".format(session_num)
+    tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1, profile_batch=0)
+    file_writer_cm = tf.summary.create_file_writer(log_dir + '/cm')  
+    
+    
     def plot_to_image(figure):
         """Converts the matplotlib plot specified by 'figure' to a PNG image and
         returns it. The supplied figure is closed and inaccessible after this call."""
@@ -145,11 +150,6 @@ def train_test_model(hparams, session_num):
         image = tf.expand_dims(image, 0)
         return image
     
-    
-    # Defining a file writer for Confusion Matrix logging purposes
-    file_writer_cm = tf.summary.create_file_writer(log_dir + '/cm')     
-    
-    
     def log_confusion_matrix(epoch, logs):
         # Use the model to predict the values from the validation dataset.
         test_pred_raw = model.predict(images_val)
@@ -158,7 +158,7 @@ def train_test_model(hparams, session_num):
         # Calculate the confusion matrix.
         cm = sklearn.metrics.confusion_matrix(labels_val, test_pred)
         # Log the confusion matrix as an image summary.
-        figure = plot_confusion_matrix(cm, class_names=['Trousers Male', 'Jeans Male', 'Trousers Female', 'Jeans Female'])
+        figure = plot_confusion_matrix(cm, class_names=['Trousers Male', 'Jenas Male', 'Trousers Female', 'Jeans Female'])
         cm_image = plot_to_image(figure)
 
         # Log the confusion matrix as an image summary.
@@ -166,15 +166,13 @@ def train_test_model(hparams, session_num):
             tf.summary.image("Confusion Matrix", cm_image, step=epoch)
     
     
-    
-    # Define the Tensorboard and Confusion Matrix callbacks.
-    tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1, profile_batch=0)
+    # Define the per-epoch callback.
     cm_callback = tf.keras.callbacks.LambdaCallback(on_epoch_end=log_confusion_matrix)
-
     
     # Defining early stopping to prevent overfitting
+### Changed monitor back to just val loss ###
     early_stopping = tf.keras.callbacks.EarlyStopping(
-        monitor = 'val_sparse_categorical_crossentropy',
+        monitor = 'val_loss',
         mode = 'auto',
         min_delta = 0,
         patience = 2,
@@ -193,10 +191,10 @@ def train_test_model(hparams, session_num):
         verbose = 2
     )
     
-    _, accuracy, _ = model.evaluate(images_val,labels_val)
+    _, accuracy = model.evaluate(images_val,labels_val)
     
     # Saving the current model for future reference
-    model.save(r"saved_models\Model_7_L2Reg\Run-{}".format(session_num))
+    model.save(r"saved_models\Model_8_Dropout\Run-{}".format(session_num))
     
     return accuracy
 
@@ -211,8 +209,7 @@ def run(log_dir, hparams, session_num):
         tf.summary.scalar(METRIC_ACCURACY, accuracy, step=1)
 
 session_num = 1
-### Added the L2 as a layer ###
-for lambda_reg in HP_LAMBDA_REG.domain.values:
+for dropout in HP_DROPOUT.domain.values:
     for filter_size_1 in HP_FILTER_SIZE_1.domain.values:
         for filter_num in HP_FILTER_NUM.domain.values:
             for filter_size_2 in HP_FILTER_SIZE_2.domain.values:
@@ -223,13 +220,13 @@ for lambda_reg in HP_LAMBDA_REG.domain.values:
                         HP_FILTER_NUM: filter_num,
                         HP_FILTER_SIZE_2: filter_size_2,
                         HP_DENSE_SIZE: dense_size,
-                        HP_LAMBDA_REG: lambda_reg
+                        HP_DROPOUT: dropout,
                     }
 
                     run_name = "run-%d" % session_num
                     print('--- Starting trial: %s' % run_name)
                     print({h.name: hparams[h] for h in hparams})
-                    run('Logs/Model_7_L2Reg/hparam_tuning/' + run_name, hparams, session_num)
+                    run('Logs/Model_8_Dropout/hparam_tuning/' + run_name, hparams, session_num)
 
                     session_num += 1
 
@@ -248,12 +245,12 @@ print("Program Ended:-", roundedend)
 import os
 osdir = os.getcwd()
 # I have a windows cleanup script here to clear out tensorboard.
-os.system('python -m tensorboard.main --logdir {}\\logs\\Model_7_L2Reg\\hparam_tuning'.format(osdir))
+os.system('python -m tensorboard.main --logdir {}\\logs\\Model_8_Dropout\\hparam_tuning'.format(osdir))
 print("=============Cleaning the windows cache for tensorboard.====================")
 os.system('taskkill /im tensorboard.exe /f')
 os.system('del /q %TMP%\.tensorboard-info\*')
 print("=============Windows cache cleared for tensorboard.=========================")
-os.system('python -m tensorboard.main --logdir {}\\logs\\Model_7_L2Reg\\fit'.format(osdir))
+os.system('python -m tensorboard.main --logdir {}\\logs\\Model_8_Dropout\\fit'.format(osdir))
 print("=============Cleaning the windows cache for tensorboard.====================")
 os.system('taskkill /im tensorboard.exe /f')
 os.system('del /q %TMP%\.tensorboard-info\*')
