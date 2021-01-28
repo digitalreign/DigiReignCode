@@ -54,11 +54,15 @@ BATCH_SIZE = 64
 # Defining the hyperparameters we would tune, and their values to be tested
 ### For this model I am hardcoding the parameters that were the most successful from the last model run. ###
 ### Added HP_LAMBDA_REG so that we can change the L2 variable. ###
+#HP_FILTER_SIZE_1 = hp.HParam('filter_size_1', hp.Discrete([3,5,7]))
+#HP_FILTER_NUM = hp.HParam('filters_number', hp.Discrete([32,64,96,128]))
+#HP_FILTER_SIZE_2 = hp.HParam('filter_size_2', hp.Discrete([3,5]))
+#HP_DENSE_SIZE = hp.HParam('dense_size', hp.Discrete([256,512,1024]))
 HP_FILTER_SIZE_1 = hp.HParam('filter_size_1', hp.Discrete([5]))
 HP_FILTER_NUM = hp.HParam('filters_number', hp.Discrete([32]))
 HP_FILTER_SIZE_2 = hp.HParam('filter_size_2', hp.Discrete([3]))
 HP_DENSE_SIZE = hp.HParam('dense_size', hp.Discrete([256]))
-HP_LAMBDA_REG = hp.HParam('lambda', hp.Discrete([0.0, 1e-5, 5e-5, 1e-4, 5e-4, 1e-3, 5e-3, 1e-2, 5e-2, 0.1]))
+HP_LAMBDA_REG = hp.HParam('lambda', hp.Discrete([0.0, 1e-5, 3e-5, 7e-5, 9e-5, 1e-4, 3e-4, 5e-4, 7e-4, 9e-4, 1e-3, 3e-3, 5e-3, 7e-3, 9e-3, 1e-2, 3e-2, 5e-2, 7e-2, 9e-2, 0.1]))
 
 METRIC_ACCURACY = 'accuracy'
 
