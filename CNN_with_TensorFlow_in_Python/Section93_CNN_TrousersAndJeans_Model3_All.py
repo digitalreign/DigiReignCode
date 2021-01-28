@@ -1,7 +1,7 @@
 # Section CNN - Trousers and Jeans - Model 3 - All
 # Author Jose Smith
 # Start Date: 20210121
-# End Date: 20210124
+# End Date: 20210128
 ### Changed all the Model Directories to Model_3
 
 # Importing the relevant packages
@@ -256,9 +256,15 @@ import os
 osdir = os.getcwd()
 # I have a windows cleanup script here to clear out tensorboard.
 os.system('python -m tensorboard.main --logdir {}\\logs\\Model_3_All\\hparam_tuning'.format(osdir))
+print("=============Cleaning the windows cache for tensorboard.====================")
 os.system('taskkill /im tensorboard.exe /f')
 os.system('del /q %TMP%\.tensorboard-info\*')
+print("=============Windows cache cleared for tensorboard.=========================")
 os.system('python -m tensorboard.main --logdir {}\\logs\\Model_3_All\\fit'.format(osdir))
+print("=============Cleaning the windows cache for tensorboard.====================")
+os.system('taskkill /im tensorboard.exe /f')
+os.system('del /q %TMP%\.tensorboard-info\*')
+print("=============Windows cache cleared for tensorboard.=========================")
 
 
 

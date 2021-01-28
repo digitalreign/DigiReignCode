@@ -1,7 +1,7 @@
 # Section CNN - Trousers and Jeans - Model 6 - Male
 # Author Jose Smith
 # Start Date: 20210128
-# End Date: 
+# End Date: 20210128
 
 # Importing the relevant packages
 print('=============Importing the relevant packages================================')
@@ -260,6 +260,10 @@ os.system('taskkill /im tensorboard.exe /f')
 os.system('del /q %TMP%\.tensorboard-info\*')
 print("=============Windows cache cleared for tensorboard.=========================")
 os.system('python -m tensorboard.main --logdir {}\\logs\\Model_6_Male\\fit'.format(osdir))
+print("=============Cleaning the windows cache for tensorboard.====================")
+os.system('taskkill /im tensorboard.exe /f')
+os.system('del /q %TMP%\.tensorboard-info\*')
+print("=============Windows cache cleared for tensorboard.=========================")
 
 
 
