@@ -1,6 +1,6 @@
-# Section CNN - Comparing Trousers and Jeans Techniques
+# Section CNN - Trousers and Jeans - Model 5 - Comparing Techniques
 # Author Jose Smith
-# Start Date: 20210121
+# Start Date: 20210128
 # End Date: 
 
 # Importing the relevant packages
@@ -41,12 +41,12 @@ images_test = images_test/255.0
 print('=============Loading the necessary models===================================')
 
 # Model for 'Combined Labels' approach
-model_all = tf.keras.models.load_model(r"CNN_with_TensorFlow_in_Python\9_Practical_Project\saved_models\Model_All")
+model_all = tf.keras.models.load_model(r"saved_models/Model_All")
 
 # Models for 'Hierarchical classification' approach
-model_gender = tf.keras.models.load_model(r"CNN_with_TensorFlow_in_Python\9_Practical_Project\saved_models\Model_Gender")
-model_male = tf.keras.models.load_model(r"CNN_with_TensorFlow_in_Python\9_Practical_Project\saved_models\Model_Male")
-model_female = tf.keras.models.load_model(r"CNN_with_TensorFlow_in_Python\9_Practical_Project\saved_models\Model_Female")
+model_gender = tf.keras.models.load_model(r"saved_models/Model3_Gender")
+model_male = tf.keras.models.load_model(r"saved_models/Model_Male")
+model_female = tf.keras.models.load_model(r"saved_models/Model_Female")
 
 # Defining the scores for both approaches
 score_all = 0

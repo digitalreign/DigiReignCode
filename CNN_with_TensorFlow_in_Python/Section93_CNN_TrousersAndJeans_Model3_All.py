@@ -64,7 +64,7 @@ METRIC_ACCURACY = 'accuracy'
 
 # Logging setup info
 ### Added HP_DENSE_SIZE ###
-with tf.summary.create_file_writer(r'logs/Model_3/hparam_tuning/').as_default():
+with tf.summary.create_file_writer(r'logs/Model_3_All/hparam_tuning/').as_default():
     hp.hparams_config(
         hparams=[HP_FILTER_SIZE_1, HP_FILTER_NUM, HP_FILTER_SIZE_2, HP_DENSE_SIZE],
         metrics=[hp.Metric(METRIC_ACCURACY, display_name='Accuracy')],
@@ -93,7 +93,7 @@ def train_test_model(hparams, session_num):
     model.compile(optimizer='adam', loss=loss_fn, metrics=['accuracy'])
 
     # Defining the logging directory
-    log_dir = "logs\\Model_3\\fit\\" + "run-{}".format(session_num)
+    log_dir = "logs\\Model_3_All\\fit\\" + "run-{}".format(session_num)
     
     
     def plot_confusion_matrix(cm, class_names):
@@ -195,7 +195,7 @@ def train_test_model(hparams, session_num):
     _, accuracy = model.evaluate(images_val,labels_val)
     
     # Saving the current model for future reference
-    model.save(r"saved_models\Model_3\Run-{}".format(session_num))
+    model.save(r"saved_models\Model_3_All\Run-{}".format(session_num))
     
     return accuracy
 
@@ -226,13 +226,13 @@ for filter_size_1 in HP_FILTER_SIZE_1.domain.values:
                 run_name = "run-%d" % session_num
                 print('--- Starting trial: %s' % run_name)
                 print({h.name: hparams[h] for h in hparams})
-                run('Logs/Model_3/hparam_tuning/' + run_name, hparams, session_num)
+                run('Logs/Model_3_All/hparam_tuning/' + run_name, hparams, session_num)
 
                 session_num += 1
 
 # Loading a model to evaluate on the test set
 print('=============Loading a model to evaluate on the test set====================')
-model = tf.keras.models.load_model(r"saved_models\Model_3\Run-1")
+model = tf.keras.models.load_model(r"saved_models\Model_3_All\Run-1")
 
 test_loss, test_accuracy = model.evaluate(images_test,labels_test)
 
@@ -255,10 +255,10 @@ print("Program Ended:-", roundedend)
 import os
 osdir = os.getcwd()
 # I have a windows cleanup script here to clear out tensorboard.
-os.system('python -m tensorboard.main --logdir {}\\logs\\Model_3\\hparam_tuning'.format(osdir))
+os.system('python -m tensorboard.main --logdir {}\\logs\\Model_3_All\\hparam_tuning'.format(osdir))
 os.system('taskkill /im tensorboard.exe /f')
 os.system('del /q %TMP%\.tensorboard-info\*')
-os.system('python -m tensorboard.main --logdir {}\\logs\\Model_3\\fit'.format(osdir))
+os.system('python -m tensorboard.main --logdir {}\\logs\\Model_3_All\\fit'.format(osdir))
 
 
 
