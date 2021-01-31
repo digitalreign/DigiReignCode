@@ -25,9 +25,9 @@ programstart = datetime.datetime.now()
 print('=============Loading the datasets===========================================')
 
 # I have been running this code in the base git directory and in this case I am pulling images from the 9_Practical_Project sub directory where the dataset is being held.
-data_train = np.load(r"CNN_with_TensorFlow_in_Python/9_Practical_Project/Dataset/Trousers & Jeans - All - Train.npz")
-data_val = np.load(r"CNN_with_TensorFlow_in_Python/9_Practical_Project/Dataset/Trousers & Jeans - All - Validation.npz")
-data_test = np.load(r"CNN_with_TensorFlow_in_Python/9_Practical_Project/Dataset/Trousers & Jeans - All - Test.npz")
+data_train = np.load(r"CNN_with_TensorFlow_in_Python/Dataset/Trousers & Jeans - All - Train.npz")
+data_val = np.load(r"CNN_with_TensorFlow_in_Python/Dataset/Trousers & Jeans - All - Validation.npz")
+data_test = np.load(r"CNN_with_TensorFlow_in_Python/Dataset/Trousers & Jeans - All - Test.npz")
 
 # Extracting the arrays from the imported data
 print('=============Extracting the arrays from the imported data===================')

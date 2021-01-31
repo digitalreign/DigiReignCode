@@ -16,7 +16,7 @@ programstart = datetime.datetime.now()
 
 # Loading the dataset
 # Only need the test set, as we will not train any netwroks in this notebook
-data_test  = np.load(r"CNN_with_TensorFlow_in_Python/9_Practical_Project/Dataset/Trousers & Jeans - All - Test.npz")
+data_test  = np.load(r"CNN_with_TensorFlow_in_Python/Dataset/Trousers & Jeans - All - Test.npz")
 
 # Extracting the images array
 print('=============Extracting the images array====================================')

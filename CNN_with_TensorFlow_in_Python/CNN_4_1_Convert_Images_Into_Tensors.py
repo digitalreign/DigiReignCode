@@ -13,7 +13,7 @@ import datetime
 programstart = datetime.datetime.now() 
 
 # Define the name of the image file we will use
-filename = "Test image.jpg"
+filename = "CNN_with_TensorFlow_in_Python/Converting_images_to_tensors/Test_image.jpg"
 
 # Load the image as a Python variable
 # We can manipulate this variable with the Pillow package
