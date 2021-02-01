@@ -65,4 +65,8 @@ https://machinelearningmastery.com/pooling-layers-for-convolutional-neural-netwo
 When training a large network, there will be a point during training when the model will stop generalizing and start learning the statistical noise in the training dataset. \
 https://machinelearningmastery.com/early-stopping-to-avoid-overtraining-neural-network-models/
 
-
+## Existing Models
+AlexNet \
+VGG \ 
+GoogLeNet \
+ResNet
