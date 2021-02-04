@@ -1,7 +1,7 @@
 # Section CNN - Trousers and Jeans - Model 1 - All
 # Author Jose Smith
 # Start Date: 20210119
-# End Date: 20210120
+# End Date: 20210204
 
 # Importing the relevant packages
 print('=============Importing the relevant packages================================')
@@ -58,7 +58,7 @@ HP_FILTER_NUM = hp.HParam('filters_number', hp.Discrete([32,64,96,128]))
 METRIC_ACCURACY = 'accuracy'
 
 # Logging setup info
-with tf.summary.create_file_writer(r'logs/Model_1/hparam_tuning/').as_default():
+with tf.summary.create_file_writer(r'logs/Model_1_All/hparam_tuning/').as_default():
     hp.hparams_config(
         hparams=[HP_FILTER_SIZE, HP_FILTER_NUM],
         metrics=[hp.Metric(METRIC_ACCURACY, display_name='Accuracy')],
@@ -85,7 +85,7 @@ def train_test_model(hparams, session_num):
     model.compile(optimizer='adam', loss=loss_fn, metrics=['accuracy'])
 
     # Defining the logging directory
-    log_dir = "logs\\Model_1\\fit\\" + "run-{}".format(session_num)
+    log_dir = "logs\\Model_1_All\\fit\\" + "run-{}".format(session_num)
     
     
     def plot_confusion_matrix(cm, class_names):
@@ -187,7 +187,7 @@ def train_test_model(hparams, session_num):
     _, accuracy = model.evaluate(images_val,labels_val)
     
     # Saving the current model for future reference
-    model.save(r"saved_models\Model_1\Run-{}".format(session_num))
+    model.save(r"saved_models\Model_1_All\Run-{}".format(session_num))
     
     return accuracy
 
@@ -214,13 +214,13 @@ for filter_size in HP_FILTER_SIZE.domain.values:
         run_name = "run-%d" % session_num
         print('--- Starting trial: %s' % run_name)
         print({h.name: hparams[h] for h in hparams})
-        run('logs/Model_1/hparam_tuning/' + run_name, hparams, session_num)
+        run('logs/Model_1_All/hparam_tuning/' + run_name, hparams, session_num)
 
         session_num += 1
 
 # Loading a model to evaluate on the test set
 print('=============Loading a model to evaluate on the test set====================')
-model = tf.keras.models.load_model(r"saved_models\Model_1\Run-1")
+model = tf.keras.models.load_model(r"saved_models\Model_1_All\Run-1")
 
 test_loss, test_accuracy = model.evaluate(images_test,labels_test)
 
@@ -243,10 +243,10 @@ print("Program Ended:-", roundedend)
 import os
 osdir = os.getcwd()
 # I have a windows cleanup script here to clear out tensorboard.
-os.system('python -m tensorboard.main --logdir {}\\logs\\Model_1\\hparam_tuning'.format(osdir))
+os.system('python -m tensorboard.main --logdir {}\\logs\\Model_1_All\\hparam_tuning'.format(osdir))
 os.system('taskkill /im tensorboard.exe /f')
 os.system('del /q %TMP%\.tensorboard-info\*')
-os.system('python -m tensorboard.main --logdir {}\\logs\\Model_1\\fit'.format(osdir))
+os.system('python -m tensorboard.main --logdir {}\\logs\\Model_1_All\\fit'.format(osdir))
 
 
 

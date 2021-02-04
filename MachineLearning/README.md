@@ -3,7 +3,8 @@ Welcome to my quilt of knowledge pertaining to Machine Learning. I am going to b
 https://machinelearningmastery.com/start-here/
 
 ## Python
-
+Built-in Fuctions \
+https://docs.python.org/3/library/functions.html 
 ## d3
 
 ## Keras
@@ -40,6 +41,10 @@ Training deep learning neural network models on more data can result in more ski
 The Keras deep learning neural network library provides the capability to fit models using image data augmentation via the ImageDataGenerator class. \
 https://machinelearningmastery.com/how-to-configure-image-data-augmentation-when-training-deep-learning-neural-networks/
 
+### FastAI and StreamLit
+Another Image classifier \
+https://towardsdatascience.com/how-to-create-an-app-to-classify-dogs-using-fastai-and-streamlit-af3e75f0ee28 
+
 ## Tensorflow
 ### Layers
 https://missinglink.ai/guides/tensorflow/tensorflow-conv2d-layers-practical-guide/ 
@@ -70,3 +75,9 @@ AlexNet \
 VGG \ 
 GoogLeNet \
 ResNet
+Slay the Spire \
+
+## Extras
+https://towardsdatascience.com/bringing-deep-neural-networks-to-slay-the-spire-a2971d5a5115 
+Free AWS Machine Learning \
+https://aws.amazon.com/free/machine-learning/ 
