@@ -5,6 +5,8 @@ https://machinelearningmastery.com/start-here/
 ## Python
 Built-in Fuctions \
 https://docs.python.org/3/library/functions.html 
+Zip Fuction \
+https://mathdatasimplified.com/2021/02/05/zip-associate-elements-from-two-iterators-based-on-the-order/
 ## d3
 
 ## Keras
