@@ -9,6 +9,8 @@ Zip Fuction \
 https://mathdatasimplified.com/2021/02/05/zip-associate-elements-from-two-iterators-based-on-the-order/
 Graphviz: \
 https://graphviz.readthedocs.io/en/stable/manual.html
+Storing to local:
+https://mathdatasimplified.com/2021/02/07/environment-variables-save-private-information-in-your-local-machine 
 
 ## d3
 
