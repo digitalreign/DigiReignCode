@@ -12,6 +12,10 @@ https://graphviz.readthedocs.io/en/stable/manual.html
 Storing to local:
 https://mathdatasimplified.com/2021/02/07/environment-variables-save-private-information-in-your-local-machine 
 
+### Pandas
+Make the Pandas look pretty \
+https://github.com/khuyentran1401/rich-dataframe
+
 ## d3
 
 ## Keras
