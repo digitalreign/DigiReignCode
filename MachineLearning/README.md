@@ -9,8 +9,10 @@ Zip Fuction \
 https://mathdatasimplified.com/2021/02/05/zip-associate-elements-from-two-iterators-based-on-the-order/
 Graphviz: \
 https://graphviz.readthedocs.io/en/stable/manual.html
-Storing to local:
+Storing to local: \
 https://mathdatasimplified.com/2021/02/07/environment-variables-save-private-information-in-your-local-machine 
+Rich Data Frames: \
+https://github.com/khuyentran1401/rich-dataframe 
 
 ### Pandas
 Make the Pandas look pretty \
