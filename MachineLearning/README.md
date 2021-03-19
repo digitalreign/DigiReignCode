@@ -12,11 +12,19 @@ https://graphviz.readthedocs.io/en/stable/manual.html
 Storing to local: \
 https://mathdatasimplified.com/2021/02/07/environment-variables-save-private-information-in-your-local-machine 
 Rich Data Frames: \
-https://github.com/khuyentran1401/rich-dataframe 
+https://github.com/khuyentran1401/rich-dataframe \
+Chonsai is a bonsai Tree generator \
+https://gitlab.com/jallbrit/cbonsai \
+re.sub to replace one string \
+https://mathdatasimplified.com/2021/03/07/re-sub-replace-one-string-with-another-string-using-regular-expression \
+Interesting Scraping script for Top Github Users and Repos using a keyword \
+https://pub.towardsai.net/top-github-scraper-scrape-top-github-users-and-repositories-based-on-a-keyword-in-one-line-of-code-d48b29954aac
 
 ### Pandas
 Make the Pandas look pretty \
-https://github.com/khuyentran1401/rich-dataframe
+https://github.com/khuyentran1401/rich-dataframe \
+Set Categories in Pandas \
+https://mathdatasimplified.com/2021/02/09/set_categories-in-pandas-how-to-sort-categorical-column-by-a-specific-ordering
 
 ## d3
 
