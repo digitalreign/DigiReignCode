@@ -1,7 +1,0 @@
-# Integration
-
-## SaltStack
-
-## Terraform
-
-## Puppet
