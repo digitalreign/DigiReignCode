@@ -1,0 +1,12 @@
+---
+- name: sampleplaybook
+  hosts: webservers
+  become: true
+  become_user: root
+  tasks:
+    - name: ensure apache is at the latest version
+      apt: name=apache2 update_cache=yes state=latest
+    - name: ensure apache is running
+      service:
+        name: apache2
+        state: started

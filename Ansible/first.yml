@@ -1,0 +1,12 @@
+---
+  - name: "My first play"
+    hosts: localhost
+
+  tasks:
+
+  -name: "test reachability"
+    ping:
+
+  -name: "install stress"
+    apt: name=stress update_cache=yes state=latest
+    
