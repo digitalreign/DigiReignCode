@@ -1,0 +1,12 @@
+---
+  - name: "NTP configuration"
+    hosts: all
+    become: true
+
+    tasks:
+
+      - name: "Ensure NTP is installed"
+        apt: name=ntp state=present
+
+      - name: "Ensure NTP is started now and at boot"
+        apt: name=ntp update_cache=yes state=latest

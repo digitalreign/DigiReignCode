@@ -1,0 +1,13 @@
+---
+  - name: "My second playbook"
+    hosts: localhost
+
+    tasks:
+
+      - name: "test reachability"
+        ping:
+
+      - name: "display file information"
+        find: 
+          path: ~/Downloads
+          file_type: file

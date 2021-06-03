@@ -1,12 +1,12 @@
 ---
-  - name: "My first play"
+  - name: "My first playbook"
     hosts: localhost
 
-  tasks:
+    tasks:
 
-  -name: "test reachability"
-    ping:
+      - name: "test reachability"
+        ping:
 
-  -name: "install stress"
-    apt: name=stress update_cache=yes state=latest
+      - name: "install stress"
+        apt: name=stress update_cache=yes state=latest
     
