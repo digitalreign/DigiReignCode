@@ -44,8 +44,16 @@ Add `rh-ruby27.sh` to `/etc/profile.d/rh-ruby27.sh`\
 ### Verify install
 `puppet agent -t`, this should take about a second and do Info messages followed by a notice for how long it took to install. Look for `master.puppet.vm` to be listed in the catalog entry.
 ## Version Control
-## Set up a control repo
-
+Go to https://github.com/ and create a new repo called `control_repo` and populate it with the `README.md`. Then from the dropdown create a new branch called `production` and make it the `default` branch.\
+Return to the code view and click `branches`, `All branches` and the trashcan next to `main`.
+## Set up a control repo with r10k
+`mkdir /etc/puppet/r10k`
+copy over `r10k.yaml` and then modify the remote source to your github link.
+`r10k deploy environment -p`
+## Verify that r10k deployed production
+`ls /etc/puppet/environments`
+`ls /etc/puppet/environments/production`
+`cat /etc/puppet/environments/production/README.md`
 # (2) First Steps with Puppet
 ## Built-in resource types
 ## Manage a file in site.pp
