@@ -27,12 +27,12 @@ Review your vagrantfile in exercise01 and from that directory do a`vagrant up`\
 Then run `vagrant ssh ` from the same folder.\
 ### Install the puppet server
 `sudo su -`\
-`rpm -ivh https://yum.puppetlabs.com/el/7/products/x86_64/puppetlabs-release-7-11.noarch.rpm`\
+`rpm -ivh https://yum.puppetlabs.com/puppetlabs-release-pc1-el-7.noarch.rpm`\
 `yum install -y puppetserver vim git`\
 `vim /etc/sysconfig/puppet` to change the `JAVA_ARGS` to `512m` as we don't need a large server\
 `systemctl start  puppetserver`\
 `systemctl enable  puppetserver`\
-`vim /etc/puppet/puppet.conf` and add `server = master.puppet.vm` to the `[agent]` section.
+`vim /etc/puppetlabs/puppet/puppet.conf` and add `server = master.puppet.vm` in a new `[agent]` section.
 ### Update ruby and install ruby gems
 `yum -y install centos-release-scl-rh centos-release-scl`\
 `sed -i -e "s/\]$/\]\npriority=10/g" /etc/yum.repos.d/CentOS-SCLo-scl.repo`\
@@ -47,16 +47,19 @@ Add `rh-ruby27.sh` to `/etc/profile.d/rh-ruby27.sh`\
 Go to https://github.com/ and create a new repo called `control_repo` and populate it with the `README.md`. Then from the dropdown create a new branch called `production` and make it the `default` branch.\
 Return to the code view and click `branches`, `All branches` and the trashcan next to `main`.
 ## Set up a control repo with r10k
-`mkdir /etc/puppet/r10k`
-copy over `r10k.yaml` and then modify the remote source to your github link.
-`r10k deploy environment -p`
+`mkdir /etc/puppetlabs/r10k`\
+copy over `r10k.yaml` and then modify the remote source to your github link.\
+`r10k deploy --config /etc/puppetlabs/r10k/r10k.yaml environment -p`
 ## Verify that r10k deployed production
-`ls /etc/puppet/environments`
-`ls /etc/puppet/environments/production`
-`cat /etc/puppet/environments/production/README.md`
+`ls /etc/puppetlabs/code/environments`\
+`ls /etc/puppetlabs/code/environments/production`\
+`cat /etc/puppetlabs/code/environments/production/README.md`
 # (2) First Steps with Puppet
-## Built-in resource types
 ## Manage a file in site.pp
+Inside github you will want to create the folder called `manifests` and put the `site.pp` file into there.\
+`r10k deploy --config /etc/puppetlabs/r10k/r10k.yaml environment -p`
+You should see `site.pp` with `ls /etc/puppetlabs/code/environments/production/manifests/`
+`puppet agent -t`
 ## Classes
 ## Introduction to the Forge
 ## The NGINX module
