@@ -61,8 +61,6 @@ Inside github you will want to create the folder called `manifests` and put the 
 You should see `site.pp` with `ls /etc/puppetlabs/code/environments/production/manifests/`
 `puppet agent -t`
 ## Classes
-## Introduction to the Forge
-## The NGINX module
 ## Editing the Puppetfile
 ## Roles and profiles
 
