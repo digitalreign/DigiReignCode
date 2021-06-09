@@ -60,8 +60,8 @@ Inside github you will want to create the folder called `manifests` and put the 
 `r10k deploy --config /etc/puppetlabs/r10k/r10k.yaml environment -p`
 You should see `site.pp` with `ls /etc/puppetlabs/code/environments/production/manifests/`
 `puppet agent -t`
-## Classes
 ## Editing the Puppetfile
+Inside github you will want to create a file called `Puppetfile` in the base `control_repo` using the included `Puppetfile`\
 ## Roles and profiles
 
 # (3) Managing More Roles
