@@ -25,9 +25,9 @@ https://www.vagrantup.com/
 ### Create the VM
 Review your vagrantfile in exercise01 and from that directory do a`vagrant up`\
 Then run `vagrant ssh ` from the same folder.\
-### Install the puppet server
+### Install the puppet server 6
 `sudo su -`\
-`rpm -ivh https://yum.puppetlabs.com/puppetlabs-release-pc1-el-7.noarch.rpm`\
+`rpm -Uvh https://yum.puppet.com/puppet6-release-el-7.noarch.rpm`\
 `yum install -y puppetserver vim git`\
 `vim /etc/sysconfig/puppet` to change the `JAVA_ARGS` to `512m` as we don't need a large server\
 `systemctl start  puppetserver`\
@@ -63,7 +63,12 @@ You should see `site.pp` with `ls /etc/puppetlabs/code/environments/production/m
 ## Editing the Puppetfile
 Inside github you will want to create a file called `Puppetfile` in the base `control_repo` using the included `Puppetfile`\
 ## Roles and profiles
-
+Inside github you will want to create files called `web.pp, app.pp, dp.pp, base.pp` in `control_repo/site/profile/manifests` using the included `web.pp, app.pp, dp.pp, base.pp`\
+Inside github you will want to create files called `app_server.pp, db_server.pp, master_server.pp` in `control_repo/site/role/manifests` using the included `app_server.pp, db_server.pp, master_server.pp`\
+Inside github you will want to create files called `environment.conf` in `control_repo` using the included `environment.conf`\
+Modify `site.pp` in `control_repo/manifests` using the included `site.pp`\
+`r10k deploy --config /etc/puppetlabs/r10k/r10k.yaml environment -p`
+`puppet agent -t`
 # (3) Managing More Roles
 ## Manage more nodes
 ## Expand site.pp
